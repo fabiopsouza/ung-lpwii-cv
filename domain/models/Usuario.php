@@ -15,7 +15,7 @@ class Usuario
 		$this->dataNascimento = $dataNascimento;
 		$this->sexo = $sexo;
 		$this->email = $email;
-		$this->estadoCivil;
+		$this->estadoCivil = $estadoCivil;
 	}
 
 	public function getId(){

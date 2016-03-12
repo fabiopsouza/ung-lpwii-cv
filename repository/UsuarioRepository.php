@@ -42,10 +42,12 @@ class UsuarioRepository extends GenericRepository
 		}
 
 	  	return mysqli_query(parent::getConnection(), $query);
+	  	parent::closeConnection();
 	}
 
 	function remove($id){
 		$query = "DELETE FROM usuario WHERE id = " . $id;
 		return mysqli_query(parent::getConnection(), $query);	
+		parent::closeConnection();
 	}
 }

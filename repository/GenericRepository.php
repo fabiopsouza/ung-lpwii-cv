@@ -6,7 +6,7 @@
 
 		private $server = "localhost";
 		private $user = "root";
-		private $password = "2013002720";
+		private $password = "teste123";
 		private $schema = "curriculo";
 
 		function __construct(){
