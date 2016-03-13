@@ -1,92 +1,44 @@
-<?php require_once("resource\\LoadBundle.php") ?>
-
 <html>
 <head>
 	<title>LPWII - CV</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
-	<form id="criarUsuario">
-		<label for="nome">Nome</label>
-		<input type="text" id="nome" />
+	<content>
 
-		<label for="dataNascimento">Data de Nascimento</label>
-		<input type="text" id="dataNascimento"/>
+		<div class="panel panel-first" style="background-color: red;">
 
-		<label for="sexo">Sexo</label>
-		<input type="text" id="sexo" />
+		</div>
 
-		<label for="email">E-mail</label>
-		<input type="text" id="email" />
+		<div class="panel" style="background-color: black;">
 
-		<label for="estadoCivil">Estado Civíl</label>
-		<input type="text" id="estadoCivil" />		
+		</div>
 
-		<input type="submit" value="Enviar" onclick="criarUsuario(event)" />
-	</form>
-	<div id="status"></div>
+		<div class="panel" style="background-color: yellow;">
 
-	<script type="text/javascript" src="js\ajax.js"></script>
-	<script type="text/javascript" src="js\url.js"></script>
-	<script type="text/javascript">
-		function criarUsuario(e){
-			e.preventDefault();
+		</div>
 
-		    var nome = document.getElementById("nome").value;
-		    var dataNascimento = document.getElementById("dataNascimento").value;
-		    var sexo = document.getElementById("sexo").value;
-		    var email = document.getElementById("email").value;
-		    var estadoCivil = document.getElementById("estadoCivil").value;
+	</content>
+	<nav>
+		<button onclick="teste()">teste</button>
+		<button id="btn-back" disabled="true" onclick="back()">Anterior</button>
+		<button id="btn-next" class="to-right" onclick="next()">Próximo</button>
+	</nav>
 
-		    //CRIAR
-		    //var data = "nome="+nome+"&"+"dataNascimento="+dataNascimento+"&"+"sexo="+sexo+"&"+"email="+email+"&"+"estadoCivil="+estadoCivil;
-		    //post(getUsuarioSavePath(), data, function(response){
-		    //	document.getElementById("status").innerHTML = response;
-		    //});		
 
-		    //LISTAR
-		    $data = "id=1"; //getById();
-		    post(getUsuarioGetPath(), null, function(response){		  
+	<script src="js/api/panel.js"></script>
+	<script src="js/helper.js"></script>
+	<script>
+		function teste(){
+			var prop1 = "value1";
+			var prop2 = "value2";
+			var prop3 = "value3";
 
-		    	var user = JSON.parse(response);
-		    	document.getElementById("status").innerHTML = response;
-		    	console.log(user[0].nome);
-		    });
+			var array = [prop1,prop2,prop3];
+			
+			console.log(getPostFormat(array));
 		}
-
-
 	</script>
-
-	<?php		
-		$userRep = new UsuarioRepository();
-		
-		// Teste Get()
-		echo "Teste Get():</br>";
-		foreach ($userRep->get() as $user) {
-			echo "</br>Id: " . $user->getId() . " Nome: " . $user->getNome() . " Data Nascimento: " . $user->getDataNascimento() . 
-				" Sexo" . $user->getSexo() . " E-mail: " . $user->getEmail() . " Estado Civíl: " . $user->getEstadoCivil();
-		}
-
-		//Teste GetById()
-		echo "</br></br>Teste GetById():</br>";
-		$user = $userRep->getById(1);
-		echo "</br>Id: " . $user->getId() . " Nome: " . $user->getNome() . " Data Nascimento: " . $user->getDataNascimento() . 
-				" Sexo" . $user->getSexo() . " E-mail: " . $user->getEmail() . " Estado Civíl: " . $user->getEstadoCivil();
-
-		//Teste Create()
-		echo "</br></br>Teste Create():</br>";
-		$user2 = new Usuario(null, "teste", "2008-02-10", "f", "teste@mail.com", "solteiro");
-		//echo $userRep->save($user2) ? "</br>criado com sucesso!" : "</br>houve um erro ao criar!";
-
-		//Teste Update()
-		echo "</br></br>Teste Update():</br>";
-		$user3 = new Usuario(2, "teste", "2008-02-10", "f", "teste@mail.com", "solteiro");
-		//echo $userRep->save($user3) ? "</br>alterado com sucesso!" : "</br>houve um erro ao alterar!";
-
-		//Teste Remove()
-		echo "</br></br>Teste Remove():</br>";
-		//echo $userRep->remove(2) ? "Removido com sucesso!" : "Houve um erro ao remover!";
-	?>
-
 </body>
 </html>
