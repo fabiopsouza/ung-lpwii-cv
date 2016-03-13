@@ -1,6 +1,6 @@
 <?php 
 
-class Usuario
+class Usuario implements JsonSerializable
 {
 	private $id;
 	private $nome;
@@ -17,6 +17,17 @@ class Usuario
 		$this->email = $email;
 		$this->estadoCivil = $estadoCivil;
 	}
+
+	public function jsonSerialize () {
+        return array(
+            'id'=>$this->id,
+            'nome'=>$this->nome,
+            'dataNascimento'=>$this->dataNascimento,
+            'sexo'=>$this->sexo,
+            'email'=>$this->email,
+            'estadoCivil'=>$this->estadoCivil
+        );
+    }
 
 	public function getId(){
 		return $this->id;

@@ -45,8 +45,12 @@
 		    //});		
 
 		    //LISTAR
-		    get(getUsuarioGetPath(), null, function(response){		    
+		    $data = "id=1"; //getById();
+		    post(getUsuarioGetPath(), null, function(response){		  
+
+		    	var user = JSON.parse(response);
 		    	document.getElementById("status").innerHTML = response;
+		    	console.log(user[0].nome);
 		    });
 		}
 

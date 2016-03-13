@@ -1,8 +1,8 @@
 var controllerPath = "controller\\";
 
-function getNomeUrl(){
-	return controllerPath + "GetNome.php";
-}
+/////////////////////
+// UsuarioController
+/////////////////////
 
 function getUsuarioSavePath(){
 	return controllerPath + "usuarioController\\Save.php";

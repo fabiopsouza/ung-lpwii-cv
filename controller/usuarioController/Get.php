@@ -3,6 +3,9 @@ require_once("..\\..\\resource\\LoadBundle.php");
 
 $userRep = new UsuarioRepository();
 
-$item = $userRep->getById(1);
-
-echo $item->getName();
+if(isset($_POST["id"])){ //Get By Id
+	echo json_encode($userRep->getById($_POST["id"]));
+}
+else{ //Get all
+	echo json_encode($userRep->get());
+}

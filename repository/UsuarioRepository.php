@@ -15,7 +15,7 @@ class UsuarioRepository extends GenericRepository
 		$list = [];			
 		while($item = mysqli_fetch_assoc($result))
 			array_push($list, new Usuario($item["id"], $item["nome"], $item["data_nascimento"], 
-											  $item["sexo"], $item["email"],$item["estado_civil"]));
+										  $item["sexo"], $item["email"],$item["estado_civil"]));
 		return $list;
 		parent::closeConnection();
 	}
@@ -27,7 +27,7 @@ class UsuarioRepository extends GenericRepository
 		$item = mysqli_fetch_assoc($result);
 
 		return new Usuario($item["id"], $item["nome"], $item["data_nascimento"], 
-											  $item["sexo"], $item["email"],$item["estado_civil"]);
+						  	$item["sexo"], $item["email"],$item["estado_civil"]);
 		parent::closeConnection();
 	}
 
