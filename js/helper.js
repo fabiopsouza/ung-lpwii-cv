@@ -1,20 +1,8 @@
-//"nome="+nome+"&"+"dataNascimento="+dataNascimento+"&"+"sexo="+sexo+"&"+"email="+email+"&"+"estadoCivil="+estadoCivil;
-
-function getPostFormat(array){
-	debugger;
+function getPostFormat(obj){
 	var formatted = "";
 
-	for(var i=0; i<array.length; i++){
-		formatted += getParameterName(array[i]);
-	}		
+	for(var name in obj)
+		formatted += name + "=" + obj[name] + "&";
 
-	return formatted;
-}
-
-function getParameterName(value){
-  for (var name in window){
-	if (window[name]==value)
-    	return(name);
-  }
-  return("");
+	return formatted.substring(0, formatted.length - 1);
 }
