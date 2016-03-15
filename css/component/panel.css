@@ -1,9 +1,35 @@
+*{
+	font-family: Verdana;
+}
+
 .panel{
 	display: none;
 	width: 100%; 
 	height: 100%;
 }
 
+.panel h1{
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.panel input, 
+.panel select, 
+.panel textarea,
+.panel table{
+	margin-bottom: 10px;
+	width: 100%;
+}
+
 .panel-first{
 	display: block;
+}
+
+#container-novo-tabela select{
+	width: 20%;
+}
+
+#container-novo-tabela input{
+	width: 70%;	
 }
