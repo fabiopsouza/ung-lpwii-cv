@@ -1,0 +1,9 @@
+content{
+	width: 65%;
+	height: 70%;
+	display: block;
+	margin: 3% auto 5px auto;
+	overflow-y: auto;
+	padding: 30px;
+	background-color: #f6f6f6;
+}

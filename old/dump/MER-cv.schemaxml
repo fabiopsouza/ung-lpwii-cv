@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_bin">curriculo</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="curriculo" view="colnames">
+<left>284</left>
+<top>14</top>
+<width>123</width>
+<height>113</height>
+<sql_create_table>CREATE TABLE `curriculo` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` varchar(50) NOT NULL,
+  `ID_USUARIO` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `CURRICULO_ID_USUARIO_IDX` (`ID_USUARIO`),
+  CONSTRAINT `CURRICULO_USUARIO_FK` FOREIGN KEY (`ID_USUARIO`) REFERENCES `usuario` (`ID`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="objetivo" view="colnames">
+<left>244</left>
+<top>267</top>
+<width>180</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `objetivo` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` varchar(255) NOT NULL,
+  `PRETENCAO_SALARIAL` float NOT NULL,
+  `ID_CURRICULO` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `OBJETIVO_CURRICULO_FK` (`ID_CURRICULO`),
+  CONSTRAINT `OBJETIVO_CURRICULO_FK` FOREIGN KEY (`ID_CURRICULO`) REFERENCES `curriculo` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="usuario" view="colnames">
+<left>10</left>
+<top>7</top>
+<width>163</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `usuario` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `NOME` varchar(255) NOT NULL,
+  `DATA_NASCIMENTO` date NOT NULL,
+  `SEXO` char(1) NOT NULL,
+  `EMAIL` varchar(255) NOT NULL,
+  `ESTADO_CIVIL` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="endereco" view="colnames">
+<left>50</left>
+<top>236</top>
+<width>133</width>
+<height>209</height>
+<sql_create_table>CREATE TABLE `endereco` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `UF` varchar(2) NOT NULL,
+  `MUNICIPIO` varchar(100) NOT NULL,
+  `BAIRRO` varchar(100) NOT NULL,
+  `CEP` varchar(30) NOT NULL,
+  `RUA` varchar(100) NOT NULL,
+  `NUMERO` varchar(15) NOT NULL,
+  `COMPLEMENTO` varchar(50) DEFAULT NULL,
+  `ID_CURRICULO` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `ENDERECO_CURRICULO_FK` (`ID_CURRICULO`),
+  CONSTRAINT `ENDERECO_CURRICULO_FK` FOREIGN KEY (`ID_CURRICULO`) REFERENCES `curriculo` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="contato" view="colnames">
+<left>584</left>
+<top>11</top>
+<width>171</width>
+<height>135</height>
+<sql_create_table>CREATE TABLE `contato` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `NUMERO` varchar(12) NOT NULL,
+  `ID_TIPO_CONTATO` int(10) NOT NULL,
+  `ID_CURRICULO` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `CONTATO_TIPO_CONTA_FK` (`ID_TIPO_CONTATO`),
+  KEY `CONTATO_CURRICULO_FK` (`ID_CURRICULO`),
+  CONSTRAINT `CONTATO_CURRICULO_FK` FOREIGN KEY (`ID_CURRICULO`) REFERENCES `curriculo` (`ID`) ON DELETE NO ACTION,
+  CONSTRAINT `CONTATO_TIPO_CONTA_FK` FOREIGN KEY (`ID_TIPO_CONTATO`) REFERENCES `tipo_contato` (`ID`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tipo_contato" view="colnames">
+<left>872</left>
+<top>20</top>
+<width>118</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `tipo_contato` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` varchar(25) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="curso" view="colnames">
+<left>487</left>
+<top>260</top>
+<width>166</width>
+<height>165</height>
+<sql_create_table>CREATE TABLE `curso` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `NOME` varchar(100) NOT NULL,
+  `INSTITUICAO` varchar(100) NOT NULL,
+  `MESES_DURACAO` int(10) NOT NULL,
+  `ID_TIPO_CURSO` int(10) NOT NULL,
+  `ID_CURRICULO` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `CURSO_TIPO_CURSO_FK` (`ID_TIPO_CURSO`),
+  KEY `CURSO_CURRICULO_FK` (`ID_CURRICULO`),
+  CONSTRAINT `CURSO_CURRICULO_FK` FOREIGN KEY (`ID_CURRICULO`) REFERENCES `curriculo` (`ID`),
+  CONSTRAINT `CURSO_TIPO_CURSO_FK` FOREIGN KEY (`ID_TIPO_CURSO`) REFERENCES `tipo_curso` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="tipo_curso" view="colnames">
+<left>710</left>
+<top>411</top>
+<width>118</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `tipo_curso` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `DESCRICAO` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="experiencia" view="colnames">
+<left>806</left>
+<top>186</top>
+<width>147</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `experiencia` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `EMPRESA` varchar(100) NOT NULL,
+  `CARGO` varchar(100) NOT NULL,
+  `DESCRICAO` varchar(255) NOT NULL,
+  `DATA_INICIO` date NOT NULL,
+  `DATA_FIM` date NOT NULL,
+  `ID_CURRICULO` int(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `EXPERIENCIA` (`ID_CURRICULO`),
+  CONSTRAINT `EXPERIENCIA` FOREIGN KEY (`ID_CURRICULO`) REFERENCES `curriculo` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
