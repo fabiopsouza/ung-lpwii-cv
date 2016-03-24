@@ -8,8 +8,12 @@ if(isset($_POST["nome"])
 	&& isset($_POST["email"]) 
 	&& isset($_POST["estadoCivil"])){
 
-	$userRep->save(new Usuario(null, $_POST["nome"], $_POST["sexo"], $_POST["email"], $_POST["estadoCivil"]));
-	header("location:/ung-lpwii-cv");
+	$response = $userRep->save(new Usuario(null, $_POST["nome"], $_POST["sexo"], $_POST["email"], $_POST["estadoCivil"]));
+
+	if($response->getIsSuccess())
+		header("location:/ung-lpwii-cv");
+	else
+		echo getErrorSpan($response->getErrorMessage());
 }
 
 
@@ -34,22 +38,37 @@ if(isset($_POST["nome"])
 				<label for="email">E-Mail</label>
 				<input type="email" id="email" placeholder="Digite seu email..." maxlength="255" required="true" name="email" /> 
 
+				<?php
+					$response = $estadoCivilRep->get();
+
+					if($response->getIsSuccess()){
+				?>
 				<label for="estadoCivil">Estado Civíl</label> 
 				<select id="estadoCivil" name="estadoCivil" required="true">
-					<?php
-					foreach ($estadoCivilRep->get() as $ec) {
-						?>
-
-						<option value="<?php echo $ec->getId() ?>">
-							<?php echo  $ec->getDescricao() ?>
-						</option>
+						
 
 						<?php
-					}
+						foreach ($response->getData() as $ec) {
+							?>
+
+							<option value="<?php echo $ec->getId() ?>">
+								<?php echo  $ec->getDescricao() ?>
+							</option>
+
+							<?php
+						}	
+					
 					?>
 				</select> 
-
 				<input id="btn-salvar" type="submit" value="Salvar" />
+
+				<?php
+
+					}else{
+						echo getErrorSpan($response->getErrorMessage());
+					}
+
+					?>
 			</form>
 			<a href="/ung-lpwii-cv">Voltar</a>
 		</div>

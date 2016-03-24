@@ -2,7 +2,10 @@
 $userRep = new UsuarioRepository();
 
 if(isset($_GET["idExcluir"])){
-	$userRep->remove($_GET["idExcluir"]);
+	$response = $userRep->remove($_GET["idExcluir"]);
+
+	if(!$response->getIsSuccess())
+		echo getErrorSpan($response->getErrorMessage());
 }
 
 ?>
@@ -27,7 +30,10 @@ if(isset($_GET["idExcluir"])){
 			</thead>
 			<tbody>
 				<?php
-				foreach ($userRep->get() as $user) {
+				$response = $userRep->get();
+
+				if($response->getIsSuccess()){
+					foreach ($response->getData() as $user) {
 					?>
 					<tr>
 						<td><?php echo $user->getNome() ?></td>
@@ -41,6 +47,9 @@ if(isset($_GET["idExcluir"])){
 						</td>
 					</tr>
 					<?php
+					}
+				}else{
+					echo getErrorSpan($response->getErrorMessage());
 				}
 				?>
 			</tr>

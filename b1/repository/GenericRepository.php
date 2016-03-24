@@ -1,5 +1,6 @@
 <?php 
-
+	require_once("resource\\LoadBundle.php");
+	
 	class GenericRepository
 	{
 		private $connection;

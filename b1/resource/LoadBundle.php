@@ -1,6 +1,8 @@
 <?php
-	
+require_once("ErrorHandler.php");
+
 spl_autoload_register("loadResources");
+set_error_handler("ErrorHandler");
 
 function loadResources($className){
 	$models = "domain\\models\\" . $className . ".php";
@@ -26,4 +28,8 @@ function loadResources($className){
 	else if(file_exists($controller)){
 		require_once($controller);
 	}
+}
+
+function getErrorSpan($error){
+	return "<span style=\"color: red; font-weight: 600\">". $error ."</span>";
 }
