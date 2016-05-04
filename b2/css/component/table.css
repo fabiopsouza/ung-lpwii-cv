@@ -1,0 +1,13 @@
+table{
+	width: 100%;
+}
+
+table tr td{
+	padding: 3px;
+	border: 1px solid #aaaaaa;
+}
+
+thead tr{
+	font-weight: bold;
+	text-align: center;
+}
