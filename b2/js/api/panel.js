@@ -11,9 +11,8 @@ function next(){
 function getPanelEnabledIndex(){
 	var panels = document.getElementsByClassName("panel");
 	for(i=0; i<panels.length; i++){
-		if(panels[i].style.display != "none"){
+		if(panels[i].style.display != "none")
 			return i;
-		}	
 	}
 }
 
