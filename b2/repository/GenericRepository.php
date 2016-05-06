@@ -1,9 +1,5 @@
 <?php 
-	if(file_exists("resource\\LoadBundle.php"))
-		require_once("resource\\LoadBundle.php");
-	else
-		require_once("..\\..\\resource\\LoadBundle.php");
-	
+
 	class GenericRepository
 	{
 		private $connection;

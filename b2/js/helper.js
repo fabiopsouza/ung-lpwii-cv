@@ -1,3 +1,19 @@
+window.readyHandlers = [];
+window.ready = function ready(handler) {
+	window.readyHandlers.push(handler);
+	handleState();
+};
+
+window.handleState = function handleState () {
+	if (['interactive', 'complete'].indexOf(document.readyState) > -1) {
+		while(window.readyHandlers.length > 0) {
+			(window.readyHandlers.shift())();
+		}
+	}
+};
+
+document.onreadystatechange = window.handleState;
+
 function getPostFormat(obj){
 	var formatted = "";
 
@@ -11,42 +27,46 @@ function getPostFormat(obj){
 
 function generateData(){
 
-		var nomesUnisex = ['Fabi','Paul','Brun','Sandr','Juli','Renat','Adrian','Fabian','Alexandr','Antoni','August','Laur','Felip'];
+	var nomesUnisex = ['Fabi','Paul','Brun','Sandr','Juli','Renat','Adrian','Fabian','Alexandr','Antoni','August','Laur','Felip'];
+	var nomes = ['Ingrid','Joao','Max','Priscila','Maria','Junior','Marcos','Marinalva','Lais','Pedro','Joel','Rafael','Jonatas','Katia','Rafaela','Ricardo','Cintia','Clarice','Guilherme','Sara','Erick','Erica','Wesley','Lucas','Matheus'];
+	var sobreNomes = ['Filho','Neto','Souza','Azevedo','Dutra','Pereira','Ferreira','Mota','Oliveira','Pinto','Silveira','Santos','Silva','Lima','Lobos','Barreto','Tavares','Lins','Porto','Rego','Siqueira','Nogueira','Vieira','Meireles'];
 
-		var nomes = ['Ingrid','Joao','Max','Priscila','Maria','Junior','Marcos','Marinalva','Lais','Pedro','Joel','Rafael','Jonatas','Katia','Rafaela','Ricardo','Cintia','Clarice','Guilherme','Sara','Erick','Erica','Wesley','Lucas','Matheus'];
+	var nome = document.getElementById("nome");
+	var tmpNome = '';
+	var tmpSobreNome = '';
 
-		var sobreNomes = ['Filho','Neto','Souza','Azevedo','Dutra','Pereira','Ferreira','Mota','Oliveira','Pinto','Silveira','Santos','Silva','Lima','Lobos','Barreto','Tavares','Lins','Porto','Rego','Siqueira','Nogueira','Vieira','Meireles'];
+	if(getRandomValue(2) == 1)
+		tmpNome = nomesUnisex[getRandomValue(nomesUnisex.length - 1)] + (getRandomValue(2) == 1 ? 'a' : 'o');
+	else
+		tmpNome = nomes[getRandomValue(getRandomValue.length - 1)];
 
-		var nome = document.getElementById("nome");
-		var tmpNome = '';
-		var tmpSobreNome = '';
+	tmpSobreNome = sobreNomes[getRandomValue(sobreNomes.length - 1)];
 
-		if(getRandomValue(2) == 1)
-			tmpNome = nomesUnisex[getRandomValue(nomesUnisex.length - 1)] + (getRandomValue(2) == 1 ? 'a' : 'o');
-		else
-			tmpNome = nomes[getRandomValue(getRandomValue.length - 1)];
+	nome.value = tmpNome + ' ' + tmpSobreNome;
 
-		tmpSobreNome = sobreNomes[getRandomValue(sobreNomes.length - 1)];
-
-		nome.value = tmpNome + ' ' + tmpSobreNome;
-
-		document.getElementById("sexo").value = (getRandomValue(2) == 1 ? 'M' : 'F');
-		document.getElementById("email").value = (tmpNome + '.' + tmpSobreNome).toLowerCase() + '@email.com';
-		document.getElementById("estadoCivil").value = getRandomValue(3);		
-	}
+	document.getElementById("sexo").value = (getRandomValue(2) == 1 ? 'M' : 'F');
+	document.getElementById("email").value = (tmpNome + '.' + tmpSobreNome).toLowerCase() + '@email.com';
+	document.getElementById("estadoCivil").value = getRandomValue(3);		
+}
 
 function getRandomValue(maxValue){
 	return Math.floor(Math.random() * maxValue + 1);
-}
-
-function clearFilds(){
-	document.getElementById("nome").value = "";
-	document.getElementById("sexo").value = "";
-	document.getElementById("email").value = "";
-	document.getElementById("estadoCivil").value = 1;
 }
 
 function hideStatus(){
 	document.getElementById("status").style.display = 'none';
 }
 
+function clearFields(){
+	document.getElementById("nome").value = "";
+	document.getElementById("sexo").value = "";
+	document.getElementById("email").value = "";
+	document.getElementById("estadoCivil").value = 1;
+}
+
+function clearUserTable(){
+	var table = document.getElementById("usuarios-table");
+	
+	while(table.rows.length > 1)
+		table.deleteRow(1);
+}

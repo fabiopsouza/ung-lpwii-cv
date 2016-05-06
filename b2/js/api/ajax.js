@@ -1,7 +1,5 @@
 function post(url, data, onSuccess, onError){
 
-	console.log(url);
-
     var request = new XMLHttpRequest();
 	request.open("POST", url, true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -19,7 +17,7 @@ function post(url, data, onSuccess, onError){
     }
 
     request.send(data);
-    document.getElementById("status").style.display = 'block';
+    document.getElementById("status").innerHTML = "processing...";
 }
 
 function globalError(state, status){

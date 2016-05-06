@@ -7,5 +7,5 @@ if(isset($_POST["id"])){ //Get By Id
 	echo json_encode($userRep->getById($_POST["id"]));
 }
 else{ //Get all
-	echo json_encode($userRep->get());
+	echo json_encode($userRep->get()->getData());
 }
