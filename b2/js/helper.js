@@ -31,7 +31,6 @@ function generateData(){
 	var nomes = ['Ingrid','Joao','Max','Priscila','Maria','Junior','Marcos','Marinalva','Lais','Pedro','Joel','Rafael','Jonatas','Katia','Rafaela','Ricardo','Cintia','Clarice','Guilherme','Sara','Erick','Erica','Wesley','Lucas','Matheus'];
 	var sobreNomes = ['Filho','Neto','Souza','Azevedo','Dutra','Pereira','Ferreira','Mota','Oliveira','Pinto','Silveira','Santos','Silva','Lima','Lobos','Barreto','Tavares','Lins','Porto','Rego','Siqueira','Nogueira','Vieira','Meireles'];
 
-	var nome = document.getElementById("nome");
 	var tmpNome = '';
 	var tmpSobreNome = '';
 
@@ -42,9 +41,16 @@ function generateData(){
 
 	tmpSobreNome = sobreNomes[getRandomValue(sobreNomes.length - 1)];
 
-	nome.value = tmpNome + ' ' + tmpSobreNome;
+	document.getElementById("nome").value = tmpNome + ' ' + tmpSobreNome;
+	
+	if(getRandomValue(2) == 1){
+		document.getElementById("masculino").checked = true;
+		document.getElementById("feminino").checked = false;
+	}else{
+		document.getElementById("masculino").checked = false;
+		document.getElementById("feminino").checked = true;
+	}
 
-	document.getElementById("sexo").value = (getRandomValue(2) == 1 ? 'M' : 'F');
 	document.getElementById("email").value = (tmpNome + '.' + tmpSobreNome).toLowerCase() + '@email.com';
 	document.getElementById("estadoCivil").value = getRandomValue(3);		
 }
@@ -58,10 +64,13 @@ function hideStatus(){
 }
 
 function clearFields(){
+	document.getElementById("codigo").value = "";
+	document.getElementById("masculino").checked = false;
+	document.getElementById("feminino").checked = false;
 	document.getElementById("nome").value = "";
-	document.getElementById("sexo").value = "";
 	document.getElementById("email").value = "";
 	document.getElementById("estadoCivil").value = 1;
+
 }
 
 function clearUserTable(){

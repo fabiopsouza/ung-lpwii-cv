@@ -1,6 +1,20 @@
 function post(url, data, onSuccess, onError){
 
-    var request = new XMLHttpRequest();
+    var request;
+
+    if(window.XMLHttpRequest){
+		request = new XMLHttpRequest();
+	}else if(window.ActiveXObject){
+		request = new ActiveXObject("Msxml2.XMLHTTP");
+
+		if(!request){
+			request = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	}
+
+	if(!request)
+		return;
+
 	request.open("POST", url, true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     
@@ -17,7 +31,7 @@ function post(url, data, onSuccess, onError){
     }
 
     request.send(data);
-    document.getElementById("status").innerHTML = "processing...";
+    document.getElementById("status").style.display = 'block';
 }
 
 function globalError(state, status){

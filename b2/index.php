@@ -31,12 +31,16 @@ $estadoCivilRep = new EstadoCivilRepository();
 		<div class="panel">
 			<button onclick="generateData()" class="to-right">Preencher formulário</button>
 			<form id="frm" method="POST">
-				<h1>Meus dados</h1> 
+				<h1>Meus dados</h1>
+				<input id="codigo" type="hidden" name="codigo"> 
+
+				<div>
+					<input type="radio" id="masculino" name="sexo" value="M" style="width:20px">Masculino</input>
+					<input type="radio" id="feminino" name="sexo" value="F" style="width:20px">Feminino</input>
+				</div>
+
 				<label for="nome">Nome</label>
 				<input type="text" id="nome" placeholder="Digite seu nome..." required="required" name="nome" maxlength="255" autofocus />
-
-				<label for="sexo">Sexo</label> 
-				<input type="text" id="sexo" placeholder="Insira o sexo..." required="true" name="sexo" maxlength="1" />
 
 				<label for="email">E-Mail</label>
 				<input type="email" id="email" placeholder="Digite seu email..." maxlength="255" required="true" name="email" /> 
@@ -72,8 +76,8 @@ $estadoCivilRep = new EstadoCivilRepository();
 				?>
 			</form>
 
-			<button id="btn-back" disabled="true" onclick="back()">Voltar</button>
-			<button onclick="clearFilds()">Limpar</button>
+			<button id="btn-back" disabled="true" onclick="clearFields(); back()">Voltar</button>
+			<button onclick="clearFields()">Limpar</button>
 		</div>
 
 	</content>
@@ -93,12 +97,12 @@ $estadoCivilRep = new EstadoCivilRepository();
 				var table = document.getElementById("usuarios-table");
 
 				for(var i = 0; i < users.length; i++){
+					
 					var row = table.insertRow(i + 1);
-
 					row.insertCell(0).innerHTML = users[i].nome;
 					row.insertCell(1).innerHTML = users[i].sexo;
 					row.insertCell(2).innerHTML = users[i].email;
-					row.insertCell(3).innerHTML = "<a href=\"/ung-lpwii-cv/detail.php?id=" + users[i].id + "\">Editar</a>";
+					row.insertCell(3).innerHTML = "<a href=\"\" onclick=\"setUser(event, " + users[i].id + ")\">Editar</a>";
 					row.insertCell(4).innerHTML = "<a href=\"\" onclick=\"deleteUser(event, " + users[i].id + ",this.parentNode.parentNode)\">Excluir</a>";
 				}
 
@@ -109,22 +113,46 @@ $estadoCivilRep = new EstadoCivilRepository();
 		function saveUser(e){
 			e.preventDefault();
 			
+			var id = document.getElementById("codigo").value;
 			var nome = document.getElementById("nome").value;
-			var sexo = document.getElementById("sexo").value;
+			var sexo = document.querySelector('input[name="sexo"]:checked').value;
 			var email = document.getElementById("email").value;
 			var estadoCivil = document.getElementById("estadoCivil").value;
 
-			var data = getPostFormat({
+			var data = {
+				id:id,
 				nome:nome, 
 				sexo:sexo,
 				email:email,
 				estadoCivil:estadoCivil
-			});
+			};
 
-			post('controller\\usuarioController\\Save.php', data, function(response){
+			post('controller\\usuarioController\\Save.php', getPostFormat(data), function(response){
 				clearUserTable();
 				clearFields();
 				listUsers();
+				hideStatus();
+			});
+		}
+
+		function setUser(e, id){
+			e.preventDefault();
+
+			post('controller\\usuarioController\\Get.php', getPostFormat({id:id}) ,function(response){
+				
+				var user = JSON.parse(response);
+				if(user.sexo == 'M'){
+					document.getElementById("masculino").checked = true;
+				}else{
+					document.getElementById("feminino").checked = true;	
+				}
+
+				document.getElementById("codigo").value = user.id;
+				document.getElementById("nome").value = user.nome;
+				document.getElementById("email").value = user.email;
+				document.getElementById("estadoCivil").value = user.idEstadoCivil;
+
+				next();
 				hideStatus();
 			});
 		}
@@ -140,4 +168,4 @@ $estadoCivilRep = new EstadoCivilRepository();
 		}
 	</script>
 </body>
-</html>'
+</html>
