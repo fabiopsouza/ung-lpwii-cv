@@ -90,7 +90,9 @@ $estadoCivilRep = new EstadoCivilRepository();
 			listUsers();
 		});
 
+		//Lista tabela de usuários
 		function listUsers(){
+			
 			post('controller\\usuarioController\\Get.php', null, function(response){
 				
 				var users = JSON.parse(response);
@@ -110,6 +112,7 @@ $estadoCivilRep = new EstadoCivilRepository();
 			});
 		}
 
+		//Salva o usuário (tela criação)
 		function saveUser(e){
 			e.preventDefault();
 			
@@ -135,6 +138,7 @@ $estadoCivilRep = new EstadoCivilRepository();
 			});
 		}
 
+		//Preenche o formulario ao clicar em editar
 		function setUser(e, id){
 			e.preventDefault();
 
@@ -157,8 +161,9 @@ $estadoCivilRep = new EstadoCivilRepository();
 			});
 		}
 
+		//Exlui usuario
 		function deleteUser(e, id, row){
-			e.preventDefault();
+			e.preventDefault(); //MANDA O NAVEGADOR NÃO RECARREGAR A PÁGINA!
 
 			post('controller\\usuarioController\\Remove.php', getPostFormat({id:id}) ,function(response){
 				var table = document.getElementById("usuarios-table");

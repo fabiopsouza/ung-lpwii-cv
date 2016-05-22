@@ -1,25 +1,15 @@
 <?php 
+	
+class GenericRepository
+{
+	protected $connection;
 
-	class GenericRepository
-	{
-		private $connection;
-
-		private $server = "localhost";
-		private $user = "root";
-		private $password = "teste123";
-		private $schema = "curriculo";
-
-		function __construct(){
-			
-		}
-
-		function getConnection(){
-			return $this->connection = mysqli_connect($this->server, $this->user, $this->password, $this->schema);
-		}
-
-		function closeConnection(){
-			return mysql_close($this->connection);
-		}
+	function __construct(){
+		$this->connect();
 	}
-
-?>
+	
+	function connect(){
+		$this->connection = new PDO("mysql:host=localhost;dbname=curriculo", "root", "teste123");
+	}
+	
+}
