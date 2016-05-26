@@ -20,7 +20,8 @@ function post(url, data, onSuccess, onError){
     
     request.onreadystatechange = function() {
 	    if(request.readyState == 4 && request.status == 200) {
-	    	if(typeof onSuccess == 'function')	
+	    	console.log('readyState: ' + request.readyState + ' - status:' + request.status);
+			if(typeof onSuccess == 'function')	
 				onSuccess(request.responseText);
 	    }else{
 	    	if(typeof onError == 'function')

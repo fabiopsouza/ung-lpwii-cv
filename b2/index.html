@@ -1,9 +1,6 @@
-'<?php require_once("resource\\LoadBundle.php");
-$userRep = new UsuarioRepository();
-$estadoCivilRep = new EstadoCivilRepository();
-?>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<title>LPWII - CV</title>
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
@@ -45,35 +42,10 @@ $estadoCivilRep = new EstadoCivilRepository();
 				<label for="email">E-Mail</label>
 				<input type="email" id="email" placeholder="Digite seu email..." maxlength="255" required="true" name="email" /> 
 
-				<?php
-				$response = $estadoCivilRep->get();
-
-				if($response->getIsSuccess()){
-					?>
-					<label for="estadoCivil">Estado Civíl</label> 
-					<select id="estadoCivil" name="estadoCivil" required="true">
-
-
-						<?php
-						foreach ($response->getData() as $ec) {
-							?>
-
-							<option value="<?php echo $ec->getId() ?>">
-								<?php echo  $ec->getDescricao() ?>
-							</option>
-
-							<?php
-						}	
-						
-						?>
-					</select> 
-					<input id="btn-salvar" type="submit" value="Salvar" onclick="saveUser(event)" />
-
-					<?php
-				}else{
-					echo getErrorSpan($response->getErrorMessage());
-				}
-				?>
+				<label for="estadoCivil">Estado Civíl</label> 
+				<select id="estadoCivil" name="estadoCivil" required="true"></select> 
+				
+				<input id="btn-salvar" type="submit" value="Salvar" onclick="saveUser(event)" />
 			</form>
 
 			<button id="btn-back" disabled="true" onclick="clearFields(); back()">Voltar</button>
@@ -86,16 +58,17 @@ $estadoCivilRep = new EstadoCivilRepository();
 	<script src="js/helper.js"></script>
 	<script src="js/api/ajax.js"></script>
 	<script>
-		ready(function () {
+		ready(function () { //Essa função é chamada toda vez que a página é carregada
 			listUsers();
+			listEstadoCivil();
 		});
 
 		//Lista tabela de usuários
 		function listUsers(){
 			
 			post('controller\\usuarioController\\Get.php', null, function(response){
-				
-				var users = JSON.parse(response);
+
+				var users = JSON.parse(response);								
 				var table = document.getElementById("usuarios-table");
 
 				for(var i = 0; i < users.length; i++){
@@ -112,6 +85,29 @@ $estadoCivilRep = new EstadoCivilRepository();
 			});
 		}
 
+	
+		//lista estado civil
+		function listEstadoCivil(){
+			post('controller\\estadoCivilController\\Get.php', null, function(response){
+				console.log(response);
+				//JSOn.encode (tratamento para converter objeto em texto)
+				
+				var estados = JSON.parse(response);//tratamento para converter texto em objeto
+				var select = document.getElementById("estadoCivil");
+				
+				for (var i = 0; i < estados.length; i++){
+				
+					var option = document.createElement("option");
+					
+					option.value = estados[i].id;
+					option.text = estados[i].descricao;
+					select.add(option);
+				
+				}
+			});
+			
+		}
+				
 		//Salva o usuário (tela criação)
 		function saveUser(e){
 			e.preventDefault();

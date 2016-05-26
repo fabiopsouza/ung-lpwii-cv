@@ -1,6 +1,6 @@
 <?php
 
-class EstadoCivil
+class EstadoCivil implements JsonSerializable
 {
 	private $id;
 	private $descricao;
@@ -9,6 +9,13 @@ class EstadoCivil
 		$this->id = $id;
 		$this->descricao = $descricao;
 	}
+	
+	public function jsonSerialize () {
+        return array(
+            'id'=>$this->id,
+            'descricao'=>$this->descricao
+        );
+    }
 
 	public function getId(){
 		return $this->id;
